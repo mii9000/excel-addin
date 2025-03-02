@@ -7,6 +7,7 @@ export interface ProcessedFile {
     status: 'processing' | 'processed' | 'error';
     text?: string;
     textContent?: string;
+    fileData?: string; // DataURL for file preview
 }
 
 export interface SearchResult {

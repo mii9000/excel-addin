@@ -61,6 +61,21 @@ const App: React.FC = () => {
                     const file = target.files[i];
                     const fileId = `file-${Date.now()}-${i}`;
                     
+                    // Read file as dataURL for preview
+                    const fileDataPromise = new Promise<string>((resolve) => {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            if (e.target && typeof e.target.result === 'string') {
+                                resolve(e.target.result);
+                            } else {
+                                resolve('');
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                    
+                    const fileData = await fileDataPromise;
+                    
                     // Create a new processed file object
                     const newFile: ProcessedFile = {
                         id: fileId,
@@ -68,7 +83,8 @@ const App: React.FC = () => {
                         size: file.size,
                         type: file.type,
                         dateAdded: new Date(),
-                        status: 'processing'
+                        status: 'processing',
+                        fileData: fileData // Store dataURL for preview
                     };
                     
                     newFiles.push(newFile);

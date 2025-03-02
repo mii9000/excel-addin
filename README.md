@@ -15,12 +15,19 @@ This Excel Add-in allows users to import documents, extract text using OCR (Opti
 
 2. **Document Management**
    - View list of imported documents with metadata
+   - Preview imported documents directly in the add-in
    - Remove processed documents
 
 3. **Search Functionality**
    - Search through extracted text
    - View matching text snippets and source documents
    - Highlight matched text
+
+4. **File Preview**
+   - View images directly in the add-in
+   - Preview PDFs in supported browsers
+   - View extracted text for all processed documents
+   - Support for different file types with appropriate viewers
 
 ## Setup and Development
 
@@ -110,6 +117,10 @@ When developing locally, you'll need to trust the development SSL certificate:
   - Check file format compatibility
   - Verify file isn't corrupted
   - Monitor memory usage for large files
+- If file preview doesn't work:
+  - Verify the file format is supported
+  - Check browser compatibility for PDF previews
+  - Ensure file data is being stored correctly
 
 ### Sideloading the Add-in
 

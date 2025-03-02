@@ -9,6 +9,7 @@ import {
     Icon
 } from '@fluentui/react';
 import { ProcessedFile } from '../models/types';
+import FilePreview from './FilePreview';
 
 export interface FileListProps {
     files: ProcessedFile[];
@@ -17,6 +18,8 @@ export interface FileListProps {
 
 const FileList: React.FC<FileListProps> = (props) => {
     const { files, onRemoveFile } = props;
+    const [previewFile, setPreviewFile] = React.useState<ProcessedFile | null>(null);
+    const [isPreviewOpen, setIsPreviewOpen] = React.useState<boolean>(false);
 
     // Format file size for display
     const formatFileSize = (bytes: number): string => {
@@ -25,8 +28,22 @@ const FileList: React.FC<FileListProps> = (props) => {
         return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
     };
 
+    // Open file preview
+    const openPreview = (file: ProcessedFile) => {
+        setPreviewFile(file);
+        setIsPreviewOpen(true);
+    };
+
+    // Close file preview
+    const closePreview = () => {
+        setIsPreviewOpen(false);
+    };
+
     // Render each file item
-    const renderFile = (file: ProcessedFile): JSX.Element => {
+    const renderFile = (item?: ProcessedFile, index?: number, isScrolling?: boolean) => {
+        if (!item) return null;
+        
+        const file = item;
         return (
             <div className="file-item" key={file.id}>
                 <Stack horizontal tokens={{ childrenGap: 10 }} verticalAlign="center" style={{ width: '100%' }}>
@@ -57,6 +74,15 @@ const FileList: React.FC<FileListProps> = (props) => {
                         )}
                     </Stack>
                     
+                    {/* Preview button */}
+                    <IconButton
+                        iconProps={{ iconName: 'Preview' }}
+                        title="Preview file"
+                        ariaLabel="Preview file"
+                        onClick={() => openPreview(file)}
+                        disabled={file.status === 'processing'}
+                    />
+                    
                     {/* Remove button */}
                     <IconButton
                         iconProps={{ iconName: 'Delete' }}
@@ -79,6 +105,13 @@ const FileList: React.FC<FileListProps> = (props) => {
             ) : (
                 <Text>No files imported yet.</Text>
             )}
+            
+            {/* File Preview Dialog */}
+            <FilePreview
+                file={previewFile}
+                isOpen={isPreviewOpen}
+                onDismiss={closePreview}
+            />
         </div>
     );
 };
