@@ -2,6 +2,10 @@
 
 This Excel Add-in allows users to import documents, extract text using OCR (Optical Character Recognition), and search through the extracted content directly within Excel.
 
+## Demo
+
+![Excel OCR Add-in Demo](./demo.png)
+
 ## Features
 
 1. **File Import & OCR Processing**

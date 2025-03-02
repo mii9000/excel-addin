@@ -47,10 +47,8 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
       patterns: [
-        {
-          from: 'assets/*',
-          to: 'assets/[name][ext]'
-        },
+        // Comment out or remove this:
+        // { from: "assets/*", to: "assets/[name][ext][query]" },
         {
           from: 'manifest.xml',
           to: '[name][ext]'
@@ -74,6 +72,9 @@ module.exports = {
     },
     compress: true,
     port: 3000,
-    hot: true
+    hot: true,
+    historyApiFallback: {
+      index: '/taskpane.html'
+    }
   }
 }; 
